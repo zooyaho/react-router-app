@@ -11,6 +11,11 @@ const DUMMY_QUOTES = [
     author: "Lengen",
     text: "graph dkslfj kdsl",
   },
+  {
+    id: "q3",
+    author: "Lengun",
+    text: "I'm fine thank you",
+  },
 ];
 
 const AllQuotes = () => {

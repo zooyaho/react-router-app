@@ -7,12 +7,17 @@ const DUMMY_QUOTES = [
   {
     id: "q1",
     author: "Max",
-    text: "hi dkslfj kdsl",
+    text: "apple dkslfj kdsl",
   },
   {
     id: "q2",
     author: "Lengen",
-    text: "hello dkslfj kdsl",
+    text: "graph dkslfj kdsl",
+  },
+  {
+    id: "q3",
+    author: "Lengun",
+    text: "I'm fine thank you",
   },
 ];
 
