@@ -1,39 +1,44 @@
 import { Link, Route, useParams, useRouteMatch } from "react-router-dom";
 import HighlightedQuote from "../quotes/HighlightedQuote";
+import LoadingSpinner from "../UI/LoadingSpinner";
 
 import Comments from "../comments/Comments";
-
-const DUMMY_QUOTES = [
-  {
-    id: "q1",
-    author: "Max",
-    text: "apple dkslfj kdsl",
-  },
-  {
-    id: "q2",
-    author: "Lengen",
-    text: "graph dkslfj kdsl",
-  },
-  {
-    id: "q3",
-    author: "Lengun",
-    text: "I'm fine thank you",
-  },
-];
+import useHttp from "../../hooks/use-http";
+import { getSingleQuote } from "../../lib/api";
+import { useEffect } from "react";
 
 const QuoteDetail = () => {
   const match = useRouteMatch();
   const params = useParams();
-  const quote = DUMMY_QUOTES.find((qute) => qute.id === params.quoteId);
+  const {
+    sendRequest,
+    data: loadedQuote,
+    status,
+    error,
+  } = useHttp(getSingleQuote, true);
 
-  if (!quote) {
-    //  404에러 처리!!
+  useEffect(() => {
+    sendRequest(params.quoteId);
+  }, [params.quoteId, sendRequest]);
+
+  if (status === "pending") {
+    return (
+      <div className="centered">
+        <LoadingSpinner />
+      </div>
+    );
+  }
+  if (status === "error") {
+    return <p className="centered focused">{error}</p>;
+  }
+  if (status === "completed" && !loadedQuote.text) {
+    //  loadedQuote는 항상 있기 때문에 text를 검사해야함. 404에러 처리!!
     return <p>no qoute found</p>;
   }
 
   return (
     <section>
-      <HighlightedQuote text={quote.text} author={quote.author} />
+      <HighlightedQuote text={loadedQuote.text} author={loadedQuote.author} />
       {/* 네스트 라우터 활용~! */}
       {/* match.path: placeholder url를 사용하여 동적 라우팅 (ex. quotes/:qouteId)*/}
       {/* match.url: 현재 url정보를 가지고 있음 (ex. quotes/q1)*/}
