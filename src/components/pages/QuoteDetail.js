@@ -1,4 +1,4 @@
-import { Link, Route, useParams, useRouteMatch } from "react-router-dom";
+import { Link, Outlet, Route, Routes, useParams } from "react-router-dom";
 import HighlightedQuote from "../quotes/HighlightedQuote";
 import LoadingSpinner from "../UI/LoadingSpinner";
 
@@ -8,7 +8,7 @@ import { getSingleQuote } from "../../lib/api";
 import { useEffect } from "react";
 
 const QuoteDetail = () => {
-  const match = useRouteMatch();
+  // const match = useRouteMatch();
   const params = useParams();
   const {
     sendRequest,
@@ -42,16 +42,7 @@ const QuoteDetail = () => {
       {/* 네스트 라우터 활용~! */}
       {/* match.path: placeholder url를 사용하여 동적 라우팅 (ex. quotes/:qouteId)*/}
       {/* match.url: 현재 url정보를 가지고 있음 (ex. quotes/q1)*/}
-      <Route path={match.path} exact>
-        <div className="centered">
-          <Link className="btn--flat" to={`${match.url}/comments`}>
-            Load Comments
-          </Link>
-        </div>
-      </Route>
-      <Route path={`${match.path}/comments`}>
-        <Comments />
-      </Route>
+      <Outlet />
     </section>
   );
 };

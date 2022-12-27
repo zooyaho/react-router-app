@@ -40,12 +40,12 @@ const QuoteForm = (props) => {
 
   return (
     <>
-      <Prompt
+      {/* <Prompt
         when={isEntered}
         message={(location) =>
           "정말로 페이지를 나가시겠습니까? 이 페이지를 나갈 경우 작성한 데이터가 사라집니다."
         }
-      />
+      /> */}
       <Card>
         <form
           onFocus={formFocusedHandler}
